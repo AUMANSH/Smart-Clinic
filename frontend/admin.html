@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Clinic - Admin Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glass-container">
+        <h1>Admin Portal</h1>
+        <div id="login-section" class="active">
+            <h2>Login</h2>
+            <input type="text" id="adminUsername" placeholder="Username (admin)">
+            <input type="password" id="adminPassword" placeholder="Password (admin123)">
+            <button onclick="loginAdmin()">Login</button>
+        </div>
+        
+        <div id="dashboard-section" class="hidden">
+            <h2>Welcome, Admin</h2>
+            <p>Add Doctor to the Smart Clinic Management System</p>
+            <input type="text" id="docFirstName" placeholder="First Name">
+            <input type="text" id="docLastName" placeholder="Last Name">
+            <input type="text" id="docSpecialty" placeholder="Specialty">
+            <input type="email" id="docEmail" placeholder="Email">
+            <button onclick="addDoctor()">Add Doctor</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

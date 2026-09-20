@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Clinic - Doctor Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glass-container">
+        <h1>Doctor Portal</h1>
+        <div id="login-section" class="active">
+            <h2>Login</h2>
+            <input type="email" id="docLoginEmail" placeholder="Email (john.doe@clinic.com)">
+            <input type="password" id="docLoginPassword" placeholder="Password (doc123)">
+            <button onclick="loginDoctor()">Login</button>
+        </div>
+        
+        <div id="dashboard-section" class="hidden dashboard-wide">
+            <h2>Doctor Dashboard</h2>
+            <p>Welcome, Dr. <span id="docNameDisplay"></span></p>
+            <h3>Your Appointments</h3>
+            <div id="appointmentsList" class="data-list">
+                <!-- Appointments will be listed here -->
+                <div class="card">10:00 AM - Alice Johnson (Scheduled)</div>
+                <div class="card">11:00 AM - Bob Williams (Scheduled)</div>
+                <div class="card">02:00 PM - Charlie Brown (Scheduled)</div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

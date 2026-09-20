@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Clinic - Patient Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glass-container">
+        <h1>Patient Portal</h1>
+        <div id="login-section" class="active">
+            <h2>Login</h2>
+            <input type="email" id="patLoginEmail" placeholder="Email (alice@example.com)">
+            <input type="password" id="patLoginPassword" placeholder="Password (pat123)">
+            <button onclick="loginPatient()">Login</button>
+        </div>
+        
+        <div id="dashboard-section" class="hidden dashboard-wide">
+            <h2>Patient Dashboard</h2>
+            <p>Welcome to your portal.</p>
+            
+            <div class="search-box">
+                <input type="text" id="searchDoctorInput" placeholder="Search Doctor by Name or Specialty">
+                <button onclick="searchDoctor()">Search</button>
+            </div>
+            
+            <div id="doctorResults" class="data-list mt-3">
+                <!-- Mock Results for the screenshot -->
+                <div class="card">
+                    <h4>Dr. John Doe (Cardiology)</h4>
+                    <p>Available: 09:00-12:00,13:00-17:00</p>
+                    <button class="btn-small">Book Appointment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
