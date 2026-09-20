@@ -22,5 +22,6 @@ public class Doctor {
     
     private String password;
     
-    private String availableTimes;
+    @ElementCollection
+    private java.util.List<String> availableTimes;
 }

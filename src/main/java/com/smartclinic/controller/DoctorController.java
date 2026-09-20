@@ -21,21 +21,15 @@ public class DoctorController {
     private TokenService tokenService;
 
     // Exposes a GET endpoint for doctor availability using dynamic parameters.
-    @GetMapping("/{id}/availability")
+    @GetMapping("/{user}/{doctorId}/availability/{token}")
     public ResponseEntity<Map<String, Object>> getDoctorAvailability(
-            @PathVariable Long id,
+            @PathVariable String user,
+            @PathVariable Long doctorId,
             @RequestParam("date") String dateString,
-            @RequestHeader(value="Authorization", required=false) String authHeader) {
+            @PathVariable String token) {
         
         Map<String, Object> response = new HashMap<>();
         
-        // Validates token and returns a structured response using ResponseEntity.
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            response.put("error", "Unauthorized access");
-            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-        }
-        
-        String token = authHeader.substring(7);
         try {
             tokenService.extractEmail(token); // Validate it's a valid token
         } catch (Exception e) {
@@ -44,13 +38,20 @@ public class DoctorController {
         }
         
         LocalDate date = LocalDate.parse(dateString);
-        String availability = doctorService.getAvailableTimeSlots(id, date);
+        java.util.List<String> availability = doctorService.getAvailableTimeSlots(doctorId, date);
         
-        response.put("doctorId", id);
+        response.put("doctorId", doctorId);
         response.put("date", date);
         response.put("availableTimes", availability);
         
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> getDoctorsBySpecialtyAndTime(
+            @RequestParam String specialty,
+            @RequestParam String time) {
+        return ResponseEntity.ok(doctorService.getDoctorsBySpecialtyAndTime(specialty, time));
     }
 
     @GetMapping

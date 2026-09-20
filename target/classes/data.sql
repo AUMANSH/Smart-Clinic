@@ -1,8 +1,13 @@
 INSERT INTO admin (username, password) VALUES ('admin', 'admin123');
 
-INSERT INTO doctor (first_name, last_name, specialty, email, password, available_times) VALUES 
-('John', 'Doe', 'Cardiology', 'john.doe@clinic.com', 'doc123', '09:00-12:00,13:00-17:00'),
-('Jane', 'Smith', 'Pediatrics', 'jane.smith@clinic.com', 'doc123', '10:00-14:00');
+INSERT INTO doctor (first_name, last_name, specialty, email, password) VALUES 
+('John', 'Doe', 'Cardiology', 'john.doe@clinic.com', 'doc123'),
+('Jane', 'Smith', 'Pediatrics', 'jane.smith@clinic.com', 'doc123');
+
+INSERT INTO doctor_available_times (doctor_id, available_times) VALUES 
+(1, '09:00-12:00'),
+(1, '13:00-17:00'),
+(2, '10:00-14:00');
 
 INSERT INTO patient (first_name, last_name, email, phone_number, password) VALUES 
 ('Alice', 'Johnson', 'alice@example.com', '555-0101', 'pat123'),

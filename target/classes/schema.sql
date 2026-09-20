@@ -16,8 +16,13 @@ CREATE TABLE doctor (
     last_name VARCHAR(255) NOT NULL,
     specialty VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    available_times VARCHAR(255)
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE doctor_available_times (
+    doctor_id BIGINT NOT NULL,
+    available_times VARCHAR(255),
+    FOREIGN KEY (doctor_id) REFERENCES doctor(id)
 );
 
 CREATE TABLE patient (
@@ -53,9 +58,17 @@ DROP PROCEDURE IF EXISTS GetDailyAppointmentReportByDoctor;
 DELIMITER //
 CREATE PROCEDURE GetDailyAppointmentReportByDoctor(IN input_date DATE, IN input_doctor_id BIGINT)
 BEGIN
-    SELECT COUNT(*) as appointment_count
-    FROM appointment
-    WHERE DATE(appointment_time) = input_date AND doctor_id = input_doctor_id;
+    SELECT 
+        CONCAT(d.first_name, ' ', d.last_name) AS doctor_name,
+        a.appointment_time,
+        a.status,
+        CONCAT(p.first_name, ' ', p.last_name) AS patient_name,
+        p.phone_number AS patient_phone
+    FROM appointment a
+    JOIN doctor d ON a.doctor_id = d.id
+    JOIN patient p ON a.patient_id = p.id
+    WHERE DATE(a.appointment_time) = input_date AND a.doctor_id = input_doctor_id
+    ORDER BY d.id, a.appointment_time;
 END //
 DELIMITER ;
 
@@ -63,12 +76,12 @@ DROP PROCEDURE IF EXISTS GetDoctorWithMostPatientsByMonth;
 DELIMITER //
 CREATE PROCEDURE GetDoctorWithMostPatientsByMonth(IN target_year INT, IN target_month INT)
 BEGIN
-    SELECT d.id, d.first_name, d.last_name, COUNT(DISTINCT a.patient_id) as patient_count
+    SELECT d.id AS doctor_id, COUNT(DISTINCT a.patient_id) AS patients_seen
     FROM doctor d
     JOIN appointment a ON d.id = a.doctor_id
     WHERE YEAR(a.appointment_time) = target_year AND MONTH(a.appointment_time) = target_month
     GROUP BY d.id
-    ORDER BY patient_count DESC
+    ORDER BY patients_seen DESC
     LIMIT 1;
 END //
 DELIMITER ;
@@ -78,12 +91,12 @@ DROP PROCEDURE IF EXISTS GetDoctorWithMostPatientsByYear;
 DELIMITER //
 CREATE PROCEDURE GetDoctorWithMostPatientsByYear(IN target_year INT)
 BEGIN
-    SELECT d.id, d.first_name, d.last_name, COUNT(DISTINCT a.patient_id) as patient_count
+    SELECT d.id AS doctor_id, COUNT(DISTINCT a.patient_id) AS patients_seen
     FROM doctor d
     JOIN appointment a ON d.id = a.doctor_id
     WHERE YEAR(a.appointment_time) = target_year
     GROUP BY d.id
-    ORDER BY patient_count DESC
+    ORDER BY patients_seen DESC
     LIMIT 1;
 END //
 DELIMITER ;

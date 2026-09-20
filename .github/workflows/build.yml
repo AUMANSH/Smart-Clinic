@@ -24,4 +24,5 @@ jobs:
         
     # Compile using Maven
     - name: Build with Maven
+      working-directory: .
       run: mvn -B package --file pom.xml

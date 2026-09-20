@@ -18,14 +18,16 @@ public class DoctorService {
     private DoctorRepository doctorRepository;
 
     // Method returns available time slots for doctor on a given date.
-    public String getAvailableTimeSlots(Long doctorId, LocalDate date) {
+    public List<String> getAvailableTimeSlots(Long doctorId, LocalDate date) {
         Optional<Doctor> doctorOpt = doctorRepository.findById(doctorId);
         if (doctorOpt.isPresent()) {
-            // For simplicity, we just return the availableTimes string from the doctor record.
-            // In a real app, this would check against existing appointments for the specific date.
             return doctorOpt.get().getAvailableTimes();
         }
-        return "Doctor not found";
+        return List.of();
+    }
+
+    public List<Doctor> getDoctorsBySpecialtyAndTime(String specialty, String time) {
+        return doctorRepository.findBySpecialtyAndAvailableTimesContains(specialty, time);
     }
 
     // Method validates doctor login credentials and returns structured response.
